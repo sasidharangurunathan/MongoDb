@@ -1,0 +1,730 @@
+PS F:\fet\mangodb\demo> mongosh
+Current Mongosh Log ID: 651502a16b55559076931763
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.0.1
+Using MongoDB:          7.0.1
+Using Mongosh:          2.0.1
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2023-09-28T08:07:38.870+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> dbs
+ReferenceError: dbs is not defined
+test> show dbs
+admin   40.00 KiB
+config  84.00 KiB
+local   40.00 KiB
+mydata  40.00 KiB
+test> use appdb
+switched to db appdb
+appdb> db.users.insertOne({name:"sasidharan"})
+{
+  acknowledged: true,
+  insertedId: ObjectId("6515093e6b55559076931764")
+}
+appdb> show dbs
+admin    40.00 KiB
+
+appdb> db.users.insertMany([{name:"sasidharan"},{name:"selvaraj"},{name:"deepan"},{name:"kurinji"}])
+{
+
+appdb> db.users.find().sort({name:1}).limit(3)
+[
+  { _id: ObjectId("65150c856b55559076931768"), name: 'deepan' },
+
+appdb> db.users.find().limit(2)
+[
+  { _id: ObjectId("6515093e6b55559076931764"), name: 'sasidharan' },
+  {
+    _id: ObjectId("65150b416b55559076931765"),
+    name: 'selvaraj',
+    age: 21,
+    address: { street: 'palani', post: 'palani' },
+    hobbies: [ 'coding', 'Cokking' ]
+  }
+]
+
+
+appdb> db.users.insertMany([{name:"arun",hobbies:["cricket","hockey"],address:{state:"tamilnadu",city:"salem"}, balance:200, dept:100},{name:"nithish",hobbies:["reading"],address:{state:"tamilnadu",city:"athur"},balance:300,dept:0},{name:"nisanth",hobbies:["web Developer"],address:{state:"tamilnadu",city:"erode"},balance:100,dept:200},{name:"sivanandham",hobbies:["downloading"],address:{state:"tamilnadu",city:"erode"},balance:200,dept:0}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("651516586b5555907693176a"),
+    '1': ObjectId("651516586b5555907693176b"),
+    '2': ObjectId("651516586b5555907693176c"),
+    '3': ObjectId("651516586b5555907693176d")
+  }
+}
+appdb> db.users.find()
+[
+  { _id: ObjectId("6515093e6b55559076931764"), name: 'sasidharan' },
+  {
+    _id: ObjectId("65150b416b55559076931765"),
+    name: 'selvaraj',
+    age: 21,
+    address: { street: 'palani', post: 'palani' },
+    hobbies: [ 'coding', 'Cokking' ]
+  },
+  { _id: ObjectId("65150c856b55559076931766"), name: 'sasidharan' },
+  { _id: ObjectId("65150c856b55559076931767"), name: 'selvaraj' },
+  { _id: ObjectId("65150c856b55559076931768"), name: 'deepan' },
+  { _id: ObjectId("65150c856b55559076931769"), name: 'kurinji' },
+  {
+    _id: ObjectId("651516586b5555907693176a"),
+    name: 'arun',
+    hobbies: [ 'cricket', 'hockey' ],
+    address: { state: 'tamilnadu', city: 'salem' },
+    balance: 200,
+    dept: 100
+  },
+  {
+    _id: ObjectId("651516586b5555907693176b"),
+
+appdb> db.users.insertOne({age:null,dept:2000,balance:10})
+{
+  acknowledged: true,
+  insertedId: ObjectId("651519ab6b5555907693176e")
+}
+appdb> db.users.insertOne({age:null,debt:2000,balance:10})
+{
+  acknowledged: true,
+  insertedId: ObjectId("651519c06b5555907693176f")
+}
+appdb> db.users.find({age:{$exists:false}})
+[
+  { _id: ObjectId("6515093e6b55559076931764"), name: 'sasidharan' },
+  { _id: ObjectId("65150c856b55559076931766"), name: 'sasidharan' },
+  { _id: ObjectId("65150c856b55559076931767"), name: 'selvaraj' },
+  { _id: ObjectId("65150c856b55559076931768"), name: 'deepan' },
+  { _id: ObjectId("65150c856b55559076931769"), name: 'kurinji' },
+  {
+    _id: ObjectId("651516586b5555907693176a"),
+    name: 'arun',
+    hobbies: [ 'cricket', 'hockey' ],
+    address: { state: 'tamilnadu', city: 'salem' },
+    balance: 200,
+    dept: 100
+  },
+  {
+    _id: ObjectId("651516586b5555907693176b"),
+
+appdb> db.users.find({age:{$exists:false}})
+[
+  { _id: ObjectId("6515093e6b55559076931764"), name: 'sasidharan' },
+  { _id: ObjectId("65150c856b55559076931766"), name: 'sasidharan' },
+  { _id: ObjectId("65150c856b55559076931767"), name: 'selvaraj' },
+  { _id: ObjectId("65150c856b55559076931768"), name: 'deepan' },
+  { _id: ObjectId("65150c856b55559076931769"), name: 'kurinji' },
+  {
+    _id: ObjectId("651516586b5555907693176a"),
+    name: 'arun',
+    hobbies: [ 'cricket', 'hockey' ],
+    address: { state: 'tamilnadu', city: 'salem' },
+    balance: 200,
+    dept: 100
+  },
+  {
+    _id: ObjectId("651516586b5555907693176b"),
+
+appdb> db.users.find({age:{$exists:false}})
+[
+  { _id: ObjectId("6515093e6b55559076931764"), name: 'sasidharan' },
+  { _id: ObjectId("65150c856b55559076931766"), name: 'sasidharan' },
+  { _id: ObjectId("65150c856b55559076931767"), name: 'selvaraj' },
+  { _id: ObjectId("65150c856b55559076931768"), name: 'deepan' },
+  { _id: ObjectId("65150c856b55559076931769"), name: 'kurinji' },
+  {
+    _id: ObjectId("651516586b5555907693176a"),
+    name: 'arun',
+    hobbies: [ 'cricket', 'hockey' ],
+    address: { state: 'tamilnadu', city: 'salem' },
+    balance: 200,
+    dept: 100
+  },
+  {
+    _id: ObjectId("651516586b5555907693176b"),
+    name: 'nithish',
+    hobbies: [ 'reading' ],
+    address: { state: 'tamilnadu', city: 'athur' },
+    balance: 300,
+    dept: 0
+  },
+  {
+    _id: ObjectId("651516586b5555907693176c"),
+    name: 'nisanth',
+    hobbies: [ 'web Developer' ],
+    address: { state: 'tamilnadu', city: 'erode' },
+    balance: 100,
+    dept: 200
+  },
+  {
+    _id: ObjectId("651516586b5555907693176d"),
+    name: 'sivanandham',
+    hobbies: [ 'downloading' ],
+    address: { state: 'tamilnadu', city: 'erode' },
+    balance: 200,
+    dept: 0
+  }
+
+appdb> db.users.find({$expr:{$gt:["debt","balance"]}})
+[
+  { _id: ObjectId("6515093e6b55559076931764"), name: 'sasidharan' },
+  {
+    _id: ObjectId("65150b416b55559076931765"),
+    name: 'selvaraj',
+    age: 21,
+    address: { street: 'palani', post: 'palani' },
+    hobbies: [ 'coding', 'Cokking' ]
+  },
+  { _id: ObjectId("65150c856b55559076931766"), name: 'sasidharan' },
+  { _id: ObjectId("65150c856b55559076931767"), name: 'selvaraj' },
+  { _id: ObjectId("65150c856b55559076931768"), name: 'deepan' },
+  { _id: ObjectId("65150c856b55559076931769"), name: 'kurinji' },
+  {
+    _id: ObjectId("651516586b5555907693176a"),
+    name: 'arun',
+    hobbies: [ 'cricket', 'hockey' ],
+    address: { state: 'tamilnadu', city: 'salem' },
+    balance: 200,
+    dept: 100
+  },
+  {
+    _id: ObjectId("651516586b5555907693176b"),
+    name: 'nithish',
+    hobbies: [ 'reading' ],
+    address: { state: 'tamilnadu', city: 'athur' },
+    balance: 300,
+    dept: 0
+  },
+  {
+    _id: ObjectId("651516586b5555907693176c"),
+    name: 'nisanth',
+    hobbies: [ 'web Developer' ],
+    address: { state: 'tamilnadu', city: 'erode' },
+    balance: 100,
+    dept: 200
+  },
+  {
+    _id: ObjectId("651516586b5555907693176d"),
+    name: 'sivanandham',
+    hobbies: [ 'downloading' ],
+    address: { state: 'tamilnadu', city: 'erode' },
+    balance: 200,
+    dept: 0
+
+appdb> db.users.find({address.city:"erode"})
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:22)
+
+
+appdb> db.users.find({"address.city":"erode"})
+[
+  {
+    _id: ObjectId("651516586b5555907693176c"),
+    name: 'nisanth',
+    hobbies: [ 'web Developer' ],
+    address: { state: 'tamilnadu', city: 'erode' },
+    balance: 100,
+    dept: 200
+  },
+  {
+    _id: ObjectId("651516586b5555907693176d"),
+    name: 'sivanandham',
+    hobbies: [ 'downloading' ],
+    address: { state: 'tamilnadu', city: 'erode' },
+    balance: 200,
+    dept: 0
+  }
+]
+appdb> db.users.find({age:{$gt:20}})
+[
+  {
+    _id: ObjectId("65150b416b55559076931765"),
+    name: 'selvaraj',
+    age: 21,
+    address: { street: 'palani', post: 'palani' },
+    hobbies: [ 'coding', 'Cokking' ]
+  }
+]
+appdb> db.users.find({age:{$gt:20}})
+[
+  {
+    _id: ObjectId("65150b416b55559076931765"),
+    name: 'selvaraj',
+    age: 21,
+    address: { street: 'palani', post: 'palani' },
+    hobbies: [ 'coding', 'Cokking' ]
+  },
+  {
+    _id: ObjectId("65150c856b55559076931766"),
+    name: 'sasidharan',
+
+appdb> db.users.updateOne({age:20},{age:23})
+MongoInvalidArgumentError: Update document requires atomic operators
+appdb> db.users.updateOne({age:20},{$set:{age:23}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+
+appdb> db.users.updateOne({_id: ObjectId("65150b416b55559076931765")},
+... {$inc:{age:3}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+
+appdb> db.users.find()
+[
+  { _id: ObjectId("6515093e6b55559076931764"), name: 'sasidharan' },
+  {
+    _id: ObjectId("65150b416b55559076931765"),
+    name: 'selvaraj',
+    age: 24,
+    address: { street: 'palani', post: 'palani' },
+    hobbies: [ 'coding', 'Cokking' ]
+  },
+  {
+    _id: ObjectId("65150c856b55559076931766"),
+    name: 'sasidharan',
+    age: 21
+  },
+  { _id: ObjectId("65150c856b55559076931767"), name: 'selvaraj' },
+  {
+    _id: ObjectId("65150c856b55559076931768"),
+    name: 'deepan',
+    age: 23
+  },
+  { _id: ObjectId("65150c856b55559076931769"), name: 'kurinji' },
+  {
+    _id: ObjectId("651516586b5555907693176a"),
+    name: 'arun',
+    hobbies: [ 'cricket', 'hockey' ],
+    address: { state: 'tamilnadu', city: 'salem' },
+    balance: 200,
+    dept: 100
+  },
+  {
+    _id: ObjectId("651516586b5555907693176b"),
+    name: 'nithish',
+    hobbies: [ 'reading' ],
+    address: { state: 'tamilnadu', city: 'athur' },
+    balance: 300,
+    dept: 0
+  },
+  {
+    _id: ObjectId("651516586b5555907693176c"),
+    name: 'nisanth',
+    hobbies: [ 'web Developer' ],
+    address: { state: 'tamilnadu', city: 'erode' },
+    balance: 100,
+
+appdb> db.users.updateOne(
+...
+...
+...
+appdb> db.users.updateOne({_id: ObjectId("65150b416b55559076931765")},{$rename:{balance:"remainBalance"}} )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+appdb> db.users.find()
+[
+  { _id: ObjectId("6515093e6b55559076931764"), name: 'sasidharan' },
+  {
+    _id: ObjectId("65150b416b55559076931765"),
+    name: 'selvaraj',
+    age: 24,
+    address: { street: 'palani', post: 'palani' },
+    hobbies: [ 'coding', 'Cokking' ]
+  },
+  {
+    _id: ObjectId("65150c856b55559076931766"),
+    name: 'sasidharan',
+    age: 21
+  },
+  { _id: ObjectId("65150c856b55559076931767"), name: 'selvaraj' },
+  {
+    _id: ObjectId("65150c856b55559076931768"),
+    name: 'deepan',
+    age: 23
+  },
+  { _id: ObjectId("65150c856b55559076931769"), name: 'kurinji' },
+  {
+    _id: ObjectId("651516586b5555907693176a"),
+    name: 'arun',
+    hobbies: [ 'cricket', 'hockey' ],
+    address: { state: 'tamilnadu', city: 'salem' },
+    balance: 200,
+    dept: 100
+  },
+  {
+    _id: ObjectId("651516586b5555907693176b"),
+    name: 'nithish',
+    hobbies: [ 'reading' ],
+    address: { state: 'tamilnadu', city: 'athur' },
+    balance: 300,
+    dept: 0
+  },
+  {
+    _id: ObjectId("651516586b5555907693176c"),
+    name: 'nisanth',
+    hobbies: [ 'web Developer' ],
+    address: { state: 'tamilnadu', city: 'erode' },
+    balance: 100,
+    dept: 200
+  },
+  {
+    _id: ObjectId("651516586b5555907693176d"),
+    name: 'sivanandham',
+    hobbies: [ 'downloading' ],
+    address: { state: 'tamilnadu', city: 'erode' },
+    balance: 200,
+    dept: 0
+  },
+  {
+    _id: ObjectId("651519ab6b5555907693176e"),
+    age: null,
+    dept: 2000,
+    balance: 10
+  },
+  {
+    _id: ObjectId("651519c06b5555907693176f"),
+    age: null,
+    debt: 2000,
+    balance: 10
+  }
+]
+appdb> db.users.updateOne({ _id: ObjectId("65150b416b55559076931765") }, { $rename: { balance: "remain" } })
+{
+  acknowledged: true,
+  insertedId: null,
+
+appdb> db.users.find()
+[
+  { _id: ObjectId("6515093e6b55559076931764"), name: 'sasidharan' },
+  {
+    _id: ObjectId("65150b416b55559076931765"),
+    name: 'selvaraj',
+    age: 24,
+    address: { street: 'palani', post: 'palani' },
+    hobbies: [ 'coding', 'Cokking' ]
+  },
+  {
+    _id: ObjectId("65150c856b55559076931766"),
+    name: 'sasidharan',
+    age: 21
+  },
+  { _id: ObjectId("65150c856b55559076931767"), name: 'selvaraj' },
+  {
+    _id: ObjectId("65150c856b55559076931768"),
+    name: 'deepan',
+    age: 23
+  },
+  { _id: ObjectId("65150c856b55559076931769"), name: 'kurinji' },
+  {
+    _id: ObjectId("651516586b5555907693176a"),
+    name: 'arun',
+    hobbies: [ 'cricket', 'hockey' ],
+    address: { state: 'tamilnadu', city: 'salem' },
+    balance: 200,
+    dept: 100
+  },
+  {
+    _id: ObjectId("651516586b5555907693176b"),
+    name: 'nithish',
+    hobbies: [ 'reading' ],
+    address: { state: 'tamilnadu', city: 'athur' },
+    balance: 300,
+    dept: 0
+  },
+  {
+    _id: ObjectId("651516586b5555907693176c"),
+    name: 'nisanth',
+    hobbies: [ 'web Developer' ],
+    address: { state: 'tamilnadu', city: 'erode' },
+    balance: 100,
+
+appdb> db.users.updateOne({_id: ObjectId("651516586b5555907693176d")},{$push:{hobbies:"watching movie"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+appdb> db.users.find({_id: ObjectId("651516586b5555907693176d")})
+[
+  {
+    _id: ObjectId("651516586b5555907693176d"),
+    name: 'sivanandham',
+    hobbies: [ 'downloading', 'watching movie' ],
+    address: { state: 'tamilnadu', city: 'erode' },
+    balance: 200,
+    dept: 0
+  }
+]
+appdb> db.users.updateOne({_id: ObjectId("651516586b5555907693176d")},{$pull:{hobbies:"downloding"}})
+{
+  acknowledged: true,
+  insertedId: null,
+
+appdb> db.users.updateMany({address:{$exists:"true"}},{$unset:{address:""}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 5,
+  modifiedCount: 5,
+  upsertedCount: 0
+}
+appdb> db.users.find()
+[
+  { _id: ObjectId("6515093e6b55559076931764"), name: 'sasidharan' },
+  {
+    _id: ObjectId("65150b416b55559076931765"),
+    name: 'selvaraj',
+    age: 24,
+    hobbies: [ 'coding', 'Cokking' ]
+  },
+  {
+    _id: ObjectId("65150c856b55559076931766"),
+    name: 'sasidharan',
+    age: 21
+  },
+  { _id: ObjectId("65150c856b55559076931767"), name: 'selvaraj' },
+  {
+    _id: ObjectId("65150c856b55559076931768"),
+    name: 'deepan',
+    age: 23
+  },
+  { _id: ObjectId("65150c856b55559076931769"), name: 'kurinji' },
+  {
+    _id: ObjectId("651516586b5555907693176a"),
+    name: 'arun',
+    hobbies: [ 'cricket', 'hockey' ],
+    balance: 200,
+    dept: 100
+  },
+  {
+    _id: ObjectId("651516586b5555907693176b"),
+    name: 'nithish',
+    hobbies: [ 'reading' ],
+    balance: 300,
+    dept: 0
+  },
+  {
+    _id: ObjectId("651516586b5555907693176c"),
+    name: 'nisanth',
+    hobbies: [ 'web Developer' ],
+    balance: 100,
+    dept: 200
+  },
+  {
+    _id: ObjectId("651516586b5555907693176d"),
+    name: 'sivanandham',
+    hobbies: [ 'watching movie' ],
+    balance: 200,
+    dept: 0
+  },
+  {
+    _id: ObjectId("651519ab6b5555907693176e"),
+    age: null,
+    dept: 2000,
+    balance: 10
+  },
+  {
+    _id: ObjectId("651519c06b5555907693176f"),
+    age: null,
+    debt: 2000,
+    remain: 10
+  }
+]
+appdb> db.users.replaceOne({name:"sasidharan"},{name:"sasi"})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+appdb> db.users.find()
+[
+  { _id: ObjectId("6515093e6b55559076931764"), name: 'sasi' },
+  {
+    _id: ObjectId("65150b416b55559076931765"),
+    name: 'selvaraj',
+    age: 24,
+    hobbies: [ 'coding', 'Cokking' ]
+  },
+  {
+    _id: ObjectId("65150c856b55559076931766"),
+    name: 'sasidharan',
+    age: 21
+  },
+  { _id: ObjectId("65150c856b55559076931767"), name: 'selvaraj' },
+  {
+    _id: ObjectId("65150c856b55559076931768"),
+    name: 'deepan',
+    age: 23
+  },
+  { _id: ObjectId("65150c856b55559076931769"), name: 'kurinji' },
+  {
+    _id: ObjectId("651516586b5555907693176a"),
+    name: 'arun',
+    hobbies: [ 'cricket', 'hockey' ],
+    balance: 200,
+    dept: 100
+  },
+  {
+    _id: ObjectId("651516586b5555907693176b"),
+    name: 'nithish',
+    hobbies: [ 'reading' ],
+    balance: 300,
+    dept: 0
+  },
+  {
+    _id: ObjectId("651516586b5555907693176c"),
+    name: 'nisanth',
+    hobbies: [ 'web Developer' ],
+    balance: 100,
+    dept: 200
+  },
+  {
+
+appdb> db.users.replaceOne({name:"sasidharan"},{name:"sasi"})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+appdb> db.users.find()
+[
+  { _id: ObjectId("6515093e6b55559076931764"), name: 'sasi' },
+  {
+    _id: ObjectId("65150b416b55559076931765"),
+    name: 'selvaraj',
+    age: 24,
+    hobbies: [ 'coding', 'Cokking' ]
+  },
+  { _id: ObjectId("65150c856b55559076931766"), name: 'sasi' },
+  { _id: ObjectId("65150c856b55559076931767"), name: 'selvaraj' },
+  {
+    _id: ObjectId("65150c856b55559076931768"),
+    name: 'deepan',
+    age: 23
+  },
+  { _id: ObjectId("65150c856b55559076931769"), name: 'kurinji' },
+  {
+    _id: ObjectId("651516586b5555907693176a"),
+    name: 'arun',
+    hobbies: [ 'cricket', 'hockey' ],
+    balance: 200,
+    dept: 100
+  },
+  {
+    _id: ObjectId("651516586b5555907693176b"),
+    name: 'nithish',
+    hobbies: [ 'reading' ],
+    balance: 300,
+    dept: 0
+  },
+  {
+    _id: ObjectId("651516586b5555907693176c"),
+    name: 'nisanth',
+    hobbies: [ 'web Developer' ],
+    balance: 100,
+    dept: 200
+  },
+  {
+    _id: ObjectId("651516586b5555907693176d"),
+    name: 'sivanandham',
+    hobbies: [ 'watching movie' ],
+    balance: 200,
+    dept: 0
+  },
+  {
+    _id: ObjectId("651519ab6b5555907693176e"),
+    age: null,
+    dept: 2000,
+    balance: 10
+  },
+  {
+    _id: ObjectId("651519c06b5555907693176f"),
+    age: null,
+    debt: 2000,
+    remain: 10
+  }
+]
+appdb> db.users.deleteOne({debt:2000})
+{ acknowledged: true, deletedCount: 1 }
+appdb> db.users.find()
+[
+  { _id: ObjectId("6515093e6b55559076931764"), name: 'sasi' },
+  {
+    _id: ObjectId("65150b416b55559076931765"),
+    name: 'selvaraj',
+    age: 24,
+    hobbies: [ 'coding', 'Cokking' ]
+  },
+  { _id: ObjectId("65150c856b55559076931766"), name: 'sasi' },
+  { _id: ObjectId("65150c856b55559076931767"), name: 'selvaraj' },
+  {
+    _id: ObjectId("65150c856b55559076931768"),
+    name: 'deepan',
+    age: 23
+  },
+  { _id: ObjectId("65150c856b55559076931769"), name: 'kurinji' },
+  {
+    _id: ObjectId("651516586b5555907693176a"),
+    name: 'arun',
+    hobbies: [ 'cricket', 'hockey' ],
+    balance: 200,
+    dept: 100
+  },
+  {
+    _id: ObjectId("651516586b5555907693176b"),
+    name: 'nithish',
+    hobbies: [ 'reading' ],
+    balance: 300,
+    dept: 0
+  },
+
+appdb> db.users.deleteMany({age:{$exists:false})
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:40)
+
+> 1 | db.users.deleteMany({age:{$exists:false})
+    |                                         ^
+  2 |
+
+appdb> db.users.deleteMany({age:{$exists:false}})
+
+appdb> db.users.find()
+[
+  {
+    _id: ObjectId("65150b416b55559076931765"),
+    name: 'selvaraj',
+    age: 24,
+    hobbies: [ 'coding', 'Cokking' ]
+  },
+  {
+    _id: ObjectId("65150c856b55559076931768"),
+    name: 'deepan',
+    age: 23
+  },
+  {
+    _id: ObjectId("651519ab6b5555907693176e"),
+    age: null,
+    dept: 2000,
+    balance: 10
+  }
+]
+appdb>
